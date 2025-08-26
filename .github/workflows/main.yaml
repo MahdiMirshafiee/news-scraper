@@ -24,5 +24,4 @@ jobs:
       - name: Run News Scraper
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          
         run: ./news-scraper
