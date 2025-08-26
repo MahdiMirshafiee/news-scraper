@@ -13,7 +13,7 @@ import (
 
 func SendPost(items []scraper.News) error {
 	botToken := os.Getenv("BOT_TOKEN")
-	chatID := os.Getenv("CHAT_ID")
+	chatID := "@TopTenHackerNews"
 
 	if botToken == "" || chatID == "" {
 		log.Fatal("BOT_TOKEN or CHAT_ID not set")
@@ -24,8 +24,9 @@ func SendPost(items []scraper.News) error {
 	var b strings.Builder
 	b.WriteString("🔥 Top 10 Hacker News today:\n\n")
 	for i, item := range items {
-		b.WriteString(fmt.Sprintf("%d. %s\n%s\n\n", i+1, item.Title, item.Link))
+		b.WriteString(fmt.Sprintf("%d. %s\n(%s)[Link]\n\n", i+1, item.Title, item.Link))
 	}
+	b.WriteString("@TopTenHackerNews\n")
 	message := b.String()
 	resp, err := http.PostForm(apiURL, url.Values{
 		"chatId": {chatID},
