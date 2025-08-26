@@ -2,10 +2,10 @@ package telegram
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
-	"log"
 	"strings"
 
 	"github.com/MahdiMirshafiee/news-scraper/scraper"
@@ -29,8 +29,9 @@ func SendPost(items []scraper.News) error {
 	b.WriteString("@TopTenHackerNews\n")
 	message := b.String()
 	resp, err := http.PostForm(apiURL, url.Values{
-		"chatId": {chatID},
+		"chat_id": {chatID},
 		"text":   {message},
+		"parse_mode": {"MarkdownV2"},
 	})
 
 	if err != nil {
