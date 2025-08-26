@@ -24,14 +24,13 @@ func SendPost(items []scraper.News) error {
 	var b strings.Builder
 	b.WriteString("🔥 Top 10 Hacker News today:\n\n")
 	for i, item := range items {
-		b.WriteString(fmt.Sprintf("%d. %s\n(%s)[Link]\n\n", i+1, item.Title, item.Link))
+		b.WriteString(fmt.Sprintf("%d. %s\n%s\n\n", i+1, item.Title, item.Link))
 	}
 	b.WriteString("@TopTenHackerNews\n")
 	message := b.String()
 	resp, err := http.PostForm(apiURL, url.Values{
 		"chat_id": {chatID},
 		"text":   {message},
-		"parse_mode": {"MarkdownV2"},
 	})
 
 	if err != nil {
