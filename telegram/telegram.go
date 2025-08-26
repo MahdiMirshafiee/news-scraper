@@ -5,17 +5,18 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"log"
 	"strings"
 
 	"github.com/MahdiMirshafiee/news-scraper/scraper"
 )
 
 func SendPost(items []scraper.News) error {
-	botToken := os.Getenv("TELEGRAM_BOT_TOKEN")
-	chatId := os.Getenv("TELEGRAM_CHAT_ID")
+	botToken := os.Getenv("BOT_TOKEN")
+	chatID := os.Getenv("CHAT_ID")
 
-	if botToken == "" || chatId == "" {
-		return fmt.Errorf("missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID environment variables")
+	if botToken == "" || chatID == "" {
+		log.Fatal("BOT_TOKEN or CHAT_ID not set")
 	}
 
 	apiURL := fmt.Sprintf("https://api.telegram.org/bot%s/sendMessage", botToken)
@@ -27,7 +28,7 @@ func SendPost(items []scraper.News) error {
 	}
 	message := b.String()
 	resp, err := http.PostForm(apiURL, url.Values{
-		"chatId": {chatId},
+		"chatId": {chatID},
 		"text":   {message},
 	})
 
