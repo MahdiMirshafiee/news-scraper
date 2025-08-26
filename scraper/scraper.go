@@ -20,7 +20,7 @@ func FetchTopNews() ([]News, error) {
 		return nil, err
 	}
 
-	req.Header.Set("User-Agent", "Mozilla/5.0 (compatible; NewsScraper/1.0; +https://example.com)")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (compatible; NewsScraper/1.0;)")
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
