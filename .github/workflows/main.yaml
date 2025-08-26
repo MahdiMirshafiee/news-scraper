@@ -1,0 +1,28 @@
+name: News Scraper Telegram
+
+on:
+  schedule:
+    - cron: "30 16 * * *" 
+  workflow_dispatch: 
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.24"
+
+      - name: Build Go project
+        run: go build -o news-scraper 
+
+      - name: Run News Scraper
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+        run: ./news-scraper
